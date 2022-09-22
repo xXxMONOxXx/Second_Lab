@@ -14,12 +14,11 @@
         android:theme="@style/Theme.SecondLab"
         tools:targetApi="31">
         <activity
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="stateAlwaysVisible"
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

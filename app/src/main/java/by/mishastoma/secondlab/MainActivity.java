@@ -2,8 +2,11 @@ package by.mishastoma.secondlab;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,11 +18,11 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int LOWEST_NUMBER = 10;
 
-    private static final int BIGGEST_NUMBER = 11;
+    private static final int BIGGEST_NUMBER = 99;
 
     private static final int MAX_ATTEMPTS = 5;
 
-    private static final int MIN_ATTEMPTS = 0;
+    private static final int MIN_ATTEMPTS = 1;
 
     private int generatedNumber = 0;
 
@@ -40,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView showHint = findViewById(R.id.show_hint);
-                showHint.setVisibility(View.VISIBLE);
                 EditText input = findViewById(R.id.edit_num);
                 String inputStr = input.getText().toString();
                 if (inputStr.isEmpty()) {
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     int inputNumber = Integer.parseInt(inputStr);
                     if (inputNumber != generatedNumber) {
-                        wrongAnswerCondition();
+                        wrongAnswerCondition(inputNumber);
                     } else {
                         correctAnswer();
                     }
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void restart(View v) {
+        EditText editNum = findViewById(R.id.edit_num);
+        editNum.getText().clear();
         TextView showHint = findViewById(R.id.show_hint);
         showHint.setVisibility(View.INVISIBLE);
         TextView showMsg = findViewById(R.id.show_msg);
@@ -76,24 +79,40 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_SHORT).show();
     }
 
-    private void wrongAnswerCondition() {
+    private void wrongAnswerCondition(int inputNumber) {
         if (attemptsLeft == MIN_ATTEMPTS) {
             Button btnGuess = findViewById(R.id.btn_guess);
             btnGuess.setEnabled(false);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.you_lose),
                     Toast.LENGTH_SHORT).show();
         } else {
-            updateAttempts(attemptsLeft - 1);
-            Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrong_answer),
-                    Toast.LENGTH_SHORT).show();
+            if(inputNumber < LOWEST_NUMBER || inputNumber > BIGGEST_NUMBER){
+                TextView showHint = findViewById(R.id.show_hint);
+                showHint.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.wrong_answer),
+                        Toast.LENGTH_SHORT).show();
+            }
+            else{
+                TextView showHint = findViewById(R.id.show_hint);
+                showHint.setVisibility(View.INVISIBLE);
+                if(inputNumber < generatedNumber){
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.number_lower),
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.number_bigger),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
         }
+        updateAttempts(attemptsLeft - 1);
     }
 
     private void correctAnswer() {
         Button btnGuess = findViewById(R.id.btn_guess);
         btnGuess.setEnabled(false);
         TextView showMsg = findViewById(R.id.show_msg);
-        showMsg.setText(getResources().getString(R.string.guessed));
+        showMsg.setText(getResources().getString(R.string.guessed) + Integer.toString(generatedNumber));
         Toast.makeText(getApplicationContext(), getResources().getString(R.string.you_win),
                 Toast.LENGTH_SHORT).show();
     }

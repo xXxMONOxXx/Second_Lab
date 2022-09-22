@@ -9,7 +9,9 @@
     <string name="restart_success">Restarted the game</string>
     <string name="invalid_input">Enter a valid number</string>
     <string name="you_win">You won!</string>
-    <string name="guessed">Guessed</string>
+    <string name="guessed">Guessed! The number was:</string>
     <string name="wrong_answer">Wrong answer</string>
     <string name="you_lose">You lose!</string>
+    <string name="number_lower">Your number is too low</string>
+    <string name="number_bigger">Your number is too high</string>
 </resources>
