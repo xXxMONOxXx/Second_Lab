@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Вторая лаба</string>
+    <string name="app_name_label">Вторая лаба</string>
+    <string name="show_msg_label">Угадай!</string>
+    <string name="show_hint_label">Загадано двузначное число</string>
+    <string name="btn_guess_label">Угадать</string>
+    <string name="show_attempts_left_label">ATTEMPTS_LEFT</string>
+    <string name="btn_restart_label">Заного</string>
+    <string name="restart_success">Игра перепущена</string>
+    <string name="invalid_input">Введите число</string>
+    <string name="you_win">Вы выйграли!</string>
+    <string name="guessed">Угадано!</string>
+    <string name="wrong_answer">Неверный ответ</string>
+    <string name="you_lose">Вы проиграли!</string>
+    <string name="number_lower">Загаданое число меньше</string>
+    <string name="number_bigger">Загаданое число больше</string>
+</resources>

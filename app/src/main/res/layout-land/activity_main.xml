@@ -8,13 +8,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="311dp"
-        android:layout_height="214dp"
+        android:layout_width="312dp"
+        android:layout_height="121dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.93"
+        app:layout_constraintHorizontal_bias="0.011"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.096"
         tools:context=".MainActivity">
 
         <TextView
@@ -48,15 +49,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="339dp"
-        android:layout_height="270dp"
+        android:layout_width="288dp"
+        android:layout_height="230dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.432"
+        app:layout_constraintVertical_bias="0.887"
         tools:context=".MainActivity">
 
         <Button
@@ -91,7 +92,7 @@
             android:id="@+id/btn_guess"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="16dp"
             android:layout_marginBottom="36dp"
             android:backgroundTint="#4CAF50"
             android:fontFamily="sans-serif-black"
