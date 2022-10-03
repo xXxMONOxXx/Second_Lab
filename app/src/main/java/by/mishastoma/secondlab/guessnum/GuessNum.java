@@ -8,6 +8,8 @@ import by.mishastoma.secondlab.GuessNumberException;
 
 public class GuessNum {
 
+    public static final int DEFAULT_LEVEL = 2;
+
     private static final int MIN_ATTEMPTS = 1;
 
     private static final String INFO = "INFO";
@@ -38,6 +40,10 @@ public class GuessNum {
         return attempts;
     }
 
+    public int getNumberSize() {
+        return numberSize;
+    }
+
     public void restart() {
         this.biggestNumber = (int) (Math.pow(10, numberSize)) - 1;
         this.lowestNumber = biggestNumber / 10 + 1;
@@ -61,9 +67,13 @@ public class GuessNum {
             return GuessConditions.WIN;
         } else {
             if (attempts == MIN_ATTEMPTS) {
+                attempts--;
                 return GuessConditions.LOSE;
             } else {
                 attempts--;
+                if(number < lowestNumber || number > biggestNumber){
+                    return GuessConditions.OUTSIDE_BOUNDS;
+                }
                 return generatedNumber < number ?
                         GuessConditions.GENERATED_NUMBER_LOWER : GuessConditions.GENERATED_NUMBER_BIGGER;
             }
@@ -84,7 +94,7 @@ public class GuessNum {
         return random.nextInt(biggestNumber - lowestNumber + 1) + lowestNumber;
     }
 
-    private void resetAttempts(){
+    private void resetAttempts() {
         int index = findNumberSize(numberSize);
         attempts = VALID_NUMBER_SIZES[index][1];
     }

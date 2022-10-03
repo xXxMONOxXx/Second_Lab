@@ -3,7 +3,7 @@
     <string name="app_name">Вторая лаба</string>
     <string name="app_name_label">Вторая лаба</string>
     <string name="show_msg_label">Угадай!</string>
-    <string name="show_hint_label">Загадано двузначное число</string>
+    <string name="show_hint_label_2">Загадано двузначное число</string>
     <string name="btn_guess_label">Угадать</string>
     <string name="show_attempts_left_label">ATTEMPTS_LEFT</string>
     <string name="btn_restart_label">Заного</string>
@@ -15,4 +15,15 @@
     <string name="you_lose">Вы проиграли!</string>
     <string name="number_lower">Загаданое число меньше</string>
     <string name="number_bigger">Загаданое число больше</string>
+    <string name="change_difficulty">Сменить сложность</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">ОТМЕНА</string>
+    <string name="level_2">Уровень 2</string>
+    <string name="level_3">Уровень 3</string>
+    <string name="level_4">Уровень 4</string>
+    <string name="fatal_error_msg">Фатальная ошибка. Приложение закрыто.</string>
+    <string name="change_level_msg">"Уровень сложности изменён на "</string>
+    <string name="show_hint_label_3">Загадано трёхзначное число</string>
+    <string name="show_hint_label_4">Загадано четырёхзначное число</string>
+    <string name="invalid_select">Неверный размер числа</string>
 </resources>
