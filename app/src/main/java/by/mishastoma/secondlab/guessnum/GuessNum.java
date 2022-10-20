@@ -80,6 +80,10 @@ public class GuessNum {
         }
     }
 
+    public int getGeneratedNumber(){
+        return generatedNumber;
+    }
+
     private int findNumberSize(int numberSize) {
         for (int i = 0; i < VALID_NUMBER_SIZES.length; i++) {
             if (numberSize == VALID_NUMBER_SIZES[i][0]) {

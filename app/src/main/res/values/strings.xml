@@ -25,4 +25,10 @@
     <string name="show_hint_label_3">Three-digit number is conceived</string>
     <string name="show_hint_label_4">Four-digit number is conceived</string>
     <string name="invalid_select">Invalid number size</string>
+    <string name="settings">Settings</string>
+    <string name="share">Share</string>
+    <!-- Strings used for fragments for navigation -->
+
+    <string name="default_username">Superplayer</string>
+    <string name="changed_name">Changed name</string>
 </resources>
