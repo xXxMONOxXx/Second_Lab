@@ -31,4 +31,6 @@
 
     <string name="default_username">Superplayer</string>
     <string name="changed_name">Changed name</string>
+    <string name="about">About</string>
+    <string name="info_stoma">Born in Belarus, student in GRSU (3 course)</string>
 </resources>

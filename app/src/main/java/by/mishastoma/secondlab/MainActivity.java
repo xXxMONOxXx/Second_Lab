@@ -1,19 +1,31 @@
 package by.mishastoma.secondlab;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.actions.NoteIntents;
 
 import java.text.SimpleDateFormat;
 
@@ -23,6 +35,8 @@ import by.mishastoma.secondlab.user.User;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+
     private static final int MAX_INPUT_SIZE = 5;
 
     private int selectedDifficulty;
@@ -31,19 +45,70 @@ public class MainActivity extends AppCompatActivity {
 
     private int currentDifficulty = GuessNum.DEFAULT_LEVEL;
 
+    private NotificationManagerCompat notificationManagerCompat;
+    private Notification notification;
+
     @Override
-    protected  void onResume(){
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.beep_1:
+                settings();
+                break;
+            case R.id.boop_1:
+                about();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.settings_menu_item:
+                settings();
+                break;
+            case R.id.about_menu_item:
+                about();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
+    protected void onDestroy(){
+        Log.i(LOG_TAG, "Guess number .onDestroy()");
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i(LOG_TAG, "Guess number .onResume()");
         super.onResume();
         loadElements();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        Log.i(LOG_TAG, "Guess number .onSaveInstanceState()");
         super.onSaveInstanceState(outState);
+        notificationManagerCompat.notify(1,notification);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle state) {
+        Log.i(LOG_TAG, "Guess number .onRestoreInstanceState()");
         super.onRestoreInstanceState(state);
     }
 
@@ -56,6 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.i(LOG_TAG, "Guess number .onCreate()");
         User.name = getResources().getString(R.string.default_username);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -66,6 +133,26 @@ public class MainActivity extends AppCompatActivity {
             fatalErrorCondition();
         }
         loadElements();
+        TextView v = findViewById(R.id.show_attempts_left);
+        registerForContextMenu(v);
+        addNotification();
+    }
+
+    @Override
+    protected void onRestart(){
+        Log.i(LOG_TAG, "Guess number .onRestart()");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        Log.i(LOG_TAG, "Guess number .onStart()");
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     public void restart(View v) {
@@ -119,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void settings(View v) {
+    public void settings() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
@@ -131,8 +218,18 @@ public class MainActivity extends AppCompatActivity {
         sendIntent.putExtra(Intent.EXTRA_TEXT, timeStamp + '\n' + Integer.toString(guessNum.getGeneratedNumber()));
         sendIntent.setType("text/plain");
 
-        Intent shareIntent = Intent.createChooser(sendIntent, null);
-        startActivity(shareIntent);
+//        Intent shareIntent = Intent.createChooser(sendIntent, null);
+//        startActivity(shareIntent);
+
+        Intent saveNotes = new Intent(NoteIntents.ACTION_CREATE_NOTE).
+                putExtra(NoteIntents.EXTRA_NAME, User.name).
+                putExtra(NoteIntents.EXTRA_TEXT, timeStamp + '\n' + Integer.toString(guessNum.getGeneratedNumber()));
+        if(saveNotes.resolveActivity(getPackageManager()) != null) {
+            startActivity(saveNotes);
+        }
+        else{
+            Log.e("FATAL", "Can't find notes.");
+        }
     }
 
     public void loadElements() {
@@ -239,5 +336,39 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return hint;
+    }
+
+    private void about(){
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
+
+    private void createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "First";
+            String description = "Second";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("myCh", name, importance);
+            channel.setDescription(description);
+            channel.setShowBadge(true);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void addNotification() {
+        createNotificationChannel();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "myCh")
+                .setSmallIcon(R.drawable.ic_settings_icon)
+                .setContentTitle("Guess num")
+                .setContentText("GO BACK TO THE GAME!!1")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setAutoCancel(true);
+
+        notification = builder.build();
+        notificationManagerCompat = NotificationManagerCompat.from(this);
     }
 }

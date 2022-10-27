@@ -3,19 +3,12 @@ package by.mishastoma.secondlab;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-
-import by.mishastoma.secondlab.guessnum.GuessNum;
 import by.mishastoma.secondlab.user.User;
 
 public class SettingsActivity extends AppCompatActivity {

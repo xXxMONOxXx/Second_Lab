@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="by.mishastoma.secondlab">
 
+    <uses-permission android:name="com.android.permission.ACTION_CREATE_NOTE"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +16,9 @@
         android:theme="@style/Theme.SecondLab"
         tools:targetApi="31">
         <activity
+            android:name=".AboutActivity"
+            android:exported="false" />
+        <activity
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
@@ -23,7 +28,9 @@
             android:windowSoftInputMode="stateAlwaysVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="com.google.android.gms.actions.CREATE_NOTE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

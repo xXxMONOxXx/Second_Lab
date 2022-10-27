@@ -30,4 +30,6 @@
     <string name="share">Поделиться</string>
     <string name="default_username">Суперигрок</string>
     <string name="changed_name">Имя изменено</string>
+    <string name="about">Про автора</string>
+    <string name="info_stoma">Родился в Беларуси, студент в ГРГУ (3 курс)</string>
 </resources>
